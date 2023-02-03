@@ -2,20 +2,26 @@ import React, { Component } from 'react';
 import {Text,View,ScrollView,TouchableOpacity, Image} from 'react-native';
 
 export default class MyList extends Component {
-    state = {
-       loading: false,
-       data: [],
-       current_page: 1,
-       error: null,
-       hasMore: true
-     }
+    constructor(props){
+        super(props)
+        this.state = {
+            loading: false,
+            data: [],
+            current_page: 1,
+            error: null,
+            hasMore: true
+          }
+    }
+    
      
-     componentWillMount() { this.getListOfData(); };
+     componentDidMount() { this.getListOfData(); };
 
      getListOfData = () => {
         if (this.state.loading) { return; }
         this.setState({ loading: true });
+        
         let newData = [];
+        
         newData.push({
             title: "Lorem ipsum", 
             text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut in congue risus, non viverra tellus. Nam faucibus ligula non metus ultrices mollis. Cras dolor purus, hendrerit eu eros quis, dignissim eleifend mi. In tincidunt mi in diam egestas congue ac ut purus. Nulla semper libero vitae blandit vehicula.",
@@ -51,7 +57,7 @@ export default class MyList extends Component {
     renderList = () => {
         return ( this.state.data.map((u) => {
           return ( 
-            <TouchableOpacity key={u.id}>
+            <TouchableOpacity  key={u.id}>
                     <View style={{ padding: 10 }}>
                         <Image  source={u.image} style={{width:100,height:100}}></Image>
                        <Text style={{ fontSize: 15}}>{u.title}</Text>        
@@ -68,6 +74,7 @@ export default class MyList extends Component {
             if (this.isCloseToBottom(nativeEvent) && this.state.hasMore) {                
                  this.getListOfData(); }}}> 
             {this.renderList()} 
+           
           </ScrollView>
           );
       }
